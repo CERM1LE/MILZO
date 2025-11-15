@@ -1,0 +1,7 @@
+{
+  "name": "nnk",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
