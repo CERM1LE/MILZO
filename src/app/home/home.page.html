@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      nnk
+      Носенков Арсений Олегович 
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -14,7 +14,28 @@
   </ion-header>
 
   <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title></ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Age: {{age}} years old</p>
+        <p>Height: {{height}} cm</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-list>
+      <ion-item *ngFor="let item of items">
+        <ion-label>
+          <h2>{{item.name}}</h2>
+          <p>Энергия: {{item.energy}} ккал</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <div style="text-align: center; margin-top: 20px;">
+      <strong>Ready to create an app?</strong>
+      <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    </div>
   </div>
 </ion-content>

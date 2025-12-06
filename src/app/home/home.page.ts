@@ -7,7 +7,15 @@ import { Component } from '@angular/core';
   standalone: false,
 })
 export class HomePage {
-pagename:string="Arseniy"
+  age: number = 20;
+  height: number = 186;
+  
+  items = [
+    { name: 'Еда', energy: 1280 },
+    { name: 'Арахис', energy: 120 },
+    { name: 'Банан', energy: 97 },
+    { name: 'رمان', energy: 47 }
+  ];
+  
   constructor() {}
-
 }
