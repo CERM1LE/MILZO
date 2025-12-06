@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Носенков Арсений Олегович 
+      Носенков Арсений Олегович
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -13,14 +13,14 @@
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
+  <div id="container" style="padding: 16px; max-width: 1400px; margin: 0 auto;">
     <ion-card>
       <ion-card-header>
-        <ion-card-title></ion-card-title>
+        <ion-card-title>Информация</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <p>Age: {{age}} years old</p>
-        <p>Height: {{height}} cm</p>
+        <p>Height: {{height}} см</p>
       </ion-card-content>
     </ion-card>
 
@@ -33,9 +33,105 @@
       </ion-item>
     </ion-list>
 
-    <div style="text-align: center; margin-top: 20px;">
-      <strong>Ready to create an app?</strong>
-      <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-    </div>
-  </div>
-</ion-content>
+    <!-- Таблица с данными -->
+    <ion-card>
+      <ion-card-header style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <ion-card-title>Таблица книг</ion-card-title>
+        <ion-button (click)="openModal()" color="primary">
+          <ion-icon name="add" slot="start"></ion-icon>
+          Добавить книгу
+        </ion-button>
+      </ion-card-header>
+      <ion-card-content style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; min-width: 600px;">
+          <thead>
+            <tr style="background-color: rgba(var(--ion-color-primary-rgb), 0.1);">
+              <th style="border: 1px solid var(--ion-color-medium); padding: 12px; text-align: left; font-weight: 600;">Название книги</th>
+              <th style="border: 1px solid var(--ion-color-medium); padding: 12px; text-align: left; font-weight: 600;">Автор</th>
+              <th style="border: 1px solid var(--ion-color-medium); padding: 12px; text-align: left; font-weight: 600;">Жанр</th>
+              <th style="border: 1px solid var(--ion-color-medium); padding: 12px; text-align: left; font-weight: 600;">Год издания</th>
+              <th style="border: 1px solid var(--ion-color-medium); padding: 12px; text-align: left; font-weight: 600;">Статус</th>
+              <th style="border: 1px solid var(--ion-color-medium); padding: 12px; text-align: center; font-weight: 600; width: 150px;">Действия</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="tableData.length === 0">
+              <td colspan="6" style="border: 1px solid var(--ion-color-medium); padding: 20px; text-align: center; color: var(--ion-color-medium);">
+                Нет данных. Нажмите "Добавить строку" для добавления записи.
+              </td>
+            </tr>
+            <tr *ngFor="let row of tableData; let i = index">
+              <td style="border: 1px solid var(--ion-color-medium); padding: 12px;">{{row[0]}}</td>
+              <td style="border: 1px solid var(--ion-color-medium); padding: 12px;">{{row[1]}}</td>
+              <td style="border: 1px solid var(--ion-color-medium); padding: 12px;">{{row[2]}}</td>
+              <td style="border: 1px solid var(--ion-color-medium); padding: 12px;">{{row[3]}}</td>
+              <td style="border: 1px solid var(--ion-color-medium); padding: 12px;">{{row[4]}}</td>
+              <td style="border: 1px solid var(--ion-color-medium); padding: 8px; text-align: center;">
+                <ion-button size="small" color="primary" (click)="editRow(i)" style="margin-right: 4px;">
+                  <ion-icon name="create" slot="icon-only"></ion-icon>
+                </ion-button>
+                <ion-button size="small" color="danger" (click)="deleteRow(i)">
+                  <ion-icon name="trash" slot="icon-only"></ion-icon>
+                </ion-button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </ion-card-content>
+    </ion-card>
+
+<!-- Модальное окно для добавления/редактирования данных -->
+<ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>{{ editingIndex >= 0 ? 'Редактировать строку' : 'Добавить новую строку' }}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModal()">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content class="ion-padding">
+      <ion-list>
+        <ion-item>
+          <ion-label position="floating">Название книги</ion-label>
+          <ion-input [(ngModel)]="newRow.col1" type="text" placeholder="Введите название книги"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label position="floating">Автор</ion-label>
+          <ion-input [(ngModel)]="newRow.col2" type="text" placeholder="Введите автора"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label position="floating">Жанр</ion-label>
+          <ion-input [(ngModel)]="newRow.col3" type="text" placeholder="Введите жанр"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label position="floating">Год издания</ion-label>
+          <ion-input [(ngModel)]="newRow.col4" type="text" placeholder="Введите год издания"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label position="floating">Статус</ion-label>
+          <ion-input [(ngModel)]="newRow.col5" type="text" placeholder="Прочитано / Читаю / В планах"></ion-input>
+        </ion-item>
+      </ion-list>
+      
+      <div style="margin-top: 20px;">
+        <ion-button expand="block" (click)="addRow()" color="primary">
+          <ion-icon name="checkmark" slot="start"></ion-icon>
+          {{ editingIndex >= 0 ? 'Сохранить' : 'Добавить' }}
+        </ion-button>
+        <ion-button expand="block" (click)="closeModal()" fill="outline" color="medium">
+          <ion-icon name="close" slot="start"></ion-icon>
+          Отмена
+        </ion-button>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>
