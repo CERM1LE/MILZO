@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import { FormsModule } from '@angular/forms';  // Должен быть только ОДИН раз
+import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
@@ -9,10 +9,11 @@ import { HomePageRoutingModule } from './home-routing.module';
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,  // Должен быть только ОДИН раз в массиве imports
+    FormsModule,
     IonicModule,
-    HomePageRoutingModule
-  ],
-  declarations: [HomePage]
+    HomePageRoutingModule,
+    HomePage  // Standalone компонент должен быть в imports, НЕ в declarations
+  ]
+  // declarations убран полностью, так как HomePage теперь standalone
 })
 export class HomePageModule {}
